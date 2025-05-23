@@ -10,13 +10,12 @@ import logging
 from django.utils.timezone import localtime
 
 
-# Инициализация общих параметров
 logger = logging.getLogger(__name__)
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(dotenv_path=BASE_DIR / '.env')
 
-token = os.getenv('TELEGRAM_BOT_TOKEN')  # теперь можно использовать .env
-chat_id = os.getenv('TELEGRAM_CHAT_ID', '-1002120990081')  # по умолчанию ваш ID
+token = os.getenv('TELEGRAM_BOT_TOKEN') 
+chat_id = os.getenv('TELEGRAM_CHAT_ID')  
 
 if not token:
     logger.error("TELEGRAM_BOT_TOKEN не найден в .env!")
