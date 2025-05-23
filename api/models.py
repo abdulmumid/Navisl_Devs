@@ -179,3 +179,17 @@ class JobApplication(models.Model):
         verbose_name_plural = _('Заявки на вакансии')
         ordering = ['id']
     
+
+class Meropriyatie(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    date = models.DateTimeField()
+    location = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='meropriyatie/')
+
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name = _('Мероприятие')
+        verbose_name_plural = _('Мероприятия')
+        ordering = ['id']

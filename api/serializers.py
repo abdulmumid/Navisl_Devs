@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Service, ContactRequest, About, Panel, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication
+from .models import Service, ContactRequest, About, Panel, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication, Meropriyatie
 
 import re
 from django import forms
@@ -86,4 +86,9 @@ class JobSerializer(serializers.ModelSerializer):
 class JobApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobApplication
+        fields = '__all__'
+
+class MeropriyatieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Meropriyatie
         fields = '__all__'

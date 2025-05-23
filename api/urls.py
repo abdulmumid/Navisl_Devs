@@ -11,6 +11,7 @@ from .views import (
     ImageViewSet,
     JobViewSet,
     JobApplicationViewSet,
+    MeropriyatieViewSet,
 )
 from rest_framework.routers import DefaultRouter
 
@@ -23,6 +24,7 @@ router.register('services', ServiceViewSet)
 router.register('images', ImageViewSet)
 router.register('job', JobViewSet)
 router.register('job-application', JobApplicationViewSet)
+router.register('meropriyatie', MeropriyatieViewSet)
 
 urlpatterns = [
     path('api/contact/', ContactRequestCreateView.as_view(), name='contact-request'),

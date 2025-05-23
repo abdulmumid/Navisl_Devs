@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, ContactRequest, Panel, About, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication
+from .models import Service, ContactRequest, Panel, About, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication, Meropriyatie
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
@@ -52,3 +52,9 @@ class JobApplicationAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'phone', 'job', 'applied_at')
     list_filter = ('applied_at',)
     search_fields = ('name', 'email', 'phone', 'linkedin_url')
+
+@admin.register(Meropriyatie)
+class MeropriyatieAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'description', 'date','location')
+    list_filter = ('date',)
+    search_fields = ('title', 'description')

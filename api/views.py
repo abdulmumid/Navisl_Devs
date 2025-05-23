@@ -1,6 +1,6 @@
 from rest_framework import generics, viewsets
-from .models import Service, ContactRequest, About, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication
-from .serializers import ServiceSerializer, ContactRequestSerializer, AboutSerializer, ToolSerializer, ProjectSerializer, ReviewSerializer, ConsultSerializer, DizainSerializer, ImageSerializer, JobSerializer, JobApplicationSerializer
+from .models import Service, ContactRequest, About, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication, Meropriyatie
+from .serializers import ServiceSerializer, ContactRequestSerializer, AboutSerializer, ToolSerializer, ProjectSerializer, ReviewSerializer, ConsultSerializer, DizainSerializer, ImageSerializer, JobSerializer, JobApplicationSerializer, MeropriyatieSerializer
 
 
 
@@ -55,3 +55,7 @@ class JobViewSet(viewsets.ReadOnlyModelViewSet):
 class JobApplicationViewSet(viewsets.ModelViewSet):
     queryset = JobApplication.objects.all()
     serializer_class = JobApplicationSerializer
+
+class MeropriyatieViewSet(viewsets.ModelViewSet):
+    queryset = Meropriyatie.objects.all()
+    serializer_class = MeropriyatieSerializer
