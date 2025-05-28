@@ -1,4 +1,5 @@
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from .views import (
     ContactRequestCreateView,
     AboutView,
@@ -7,29 +8,25 @@ from .views import (
     ReviewView,
     ConsultView,
     DizainViewSet,
-    ServiceViewSet,
     ImageViewSet,
     JobViewSet,
     JobApplicationViewSet,
     MeropriyatieViewSet,
 )
-from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('tools', ToolViewSet)
-router.register('project', ProjectView)
-router.register('review', ReviewView)
-router.register('dizain', DizainViewSet)
-router.register('services', ServiceViewSet)
-router.register('images', ImageViewSet)
-router.register('job', JobViewSet)
-router.register('job-application', JobApplicationViewSet)
-router.register('meropriyatie', MeropriyatieViewSet)
+router.register('consult', ConsultView, basename='consult')
+router.register('tools', ToolViewSet, basename='tools')
+router.register('projects', ProjectView, basename='projects') 
+router.register('reviews', ReviewView, basename='reviews')
+router.register('dizains', DizainViewSet, basename='dizains')
+router.register('images', ImageViewSet, basename='images')
+router.register('jobs', JobViewSet, basename='jobs')
+router.register('job-applications', JobApplicationViewSet, basename='jobapplications')
+router.register('meropriyaties', MeropriyatieViewSet, basename='meropriyaties')
 
 urlpatterns = [
     path('api/contact/', ContactRequestCreateView.as_view(), name='contact-request'),
-    path('api/consult/', ConsultView.as_view(), name='consult-request'),
-    path('about/', AboutView.as_view()),
+    path('api/about/', AboutView.as_view(), name='about'),
     path('api/', include(router.urls)),
 ]
-

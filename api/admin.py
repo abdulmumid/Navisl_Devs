@@ -1,15 +1,12 @@
 from django.contrib import admin
-from .models import Service, ContactRequest, Panel, About, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication, Meropriyatie
+from .models import ContactRequest, Services, About, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication, Meropriyatie
 
-@admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'description')
 
 @admin.register(ContactRequest)
 class ContactRequestAdmin(admin.ModelAdmin):
     list_display = ('phone', 'email', 'created_at')  
 
-@admin.register(Panel)
+@admin.register(Services)
 class PanelAdmin(admin.ModelAdmin):
     list_display = ('id','title', 'description', 'category', 'icon')
 
