@@ -10,19 +10,6 @@ from .serializers import (
     JobSerializer, JobApplicationSerializer, MeropriyatieSerializer
 )
 
-class HomeView(generics.RetrieveAPIView):
-    """
-    Представление для главной страницы.
-    Возвращает первый объект ContactRequest.
-    """
-    queryset = ContactRequest.objects.all()
-    serializer_class = ContactRequestSerializer
-
-    def get_object(self):
-        # Возвращаем первый объект ContactRequest (предполагается один объект)
-        return ContactRequest.objects.first()
-
-
 
 # --- Создание новой заявки через API ---
 class ContactRequestCreateView(generics.CreateAPIView):

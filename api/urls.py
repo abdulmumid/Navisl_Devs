@@ -1,7 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    HomeView as Home,
     ContactRequestCreateView,
     AboutView,
     ToolViewSet,
@@ -31,7 +30,6 @@ router.register('meropriyaties', MeropriyatieViewSet, basename='meropriyaties')
 
 # Определяем urlpatterns для ручных и автоматических маршрутов
 urlpatterns = [
-    path('', Home, name='home'),  # Главная страница
     # Отдельный путь для создания заявки контакта
     path('api/contact/', ContactRequestCreateView.as_view(), name='contact-request'),
     # Отдельный путь для получения информации 'About' (единственный объект)
