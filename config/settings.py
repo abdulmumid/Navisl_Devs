@@ -13,7 +13,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-placeholder')
 
 DEBUG = False
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = ["navis-devs.onrender.com"]
+
 
 
 INSTALLED_APPS = [
