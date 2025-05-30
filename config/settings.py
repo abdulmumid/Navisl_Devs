@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 # Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Для отдачи статики
+    'whitenoise.middleware.WhiteNoiseMiddleware',  
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',  
     'django.middleware.common.CommonMiddleware',
@@ -104,3 +104,8 @@ SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+print("DB NAME:", os.getenv('DB_NAME'))
+print("DB USER:", os.getenv('DB_USER'))
+print("DB HOST:", os.getenv('DB_HOST'))
+print("DB PORT:", os.getenv('DB_PORT'))

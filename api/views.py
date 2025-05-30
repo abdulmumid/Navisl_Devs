@@ -73,6 +73,10 @@ class JobViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Job.objects.filter(is_active=True).order_by('-created_at')
     serializer_class = JobSerializer
 
+    @staticmethod
+    def get_status_message():
+        return "Это список активных вакансий"
+
 
 # --- Работа с откликами на вакансии: создание, просмотр списка, просмотр деталей ---
 class JobApplicationViewSet(viewsets.GenericViewSet,
