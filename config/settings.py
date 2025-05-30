@@ -11,9 +11,10 @@ load_dotenv(dotenv_path=BASE_DIR / '.env')
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-placeholder')  
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["navis-devs.onrender.com", "localhost", "127.0.0.1"]
+# ALLOWED_HOSTS = ["navis-devs.onrender.com", "localhost", "127.0.0.1"]
+ALLOW_HOSTS = ['*']
 
 
 
