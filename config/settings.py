@@ -13,7 +13,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-placeholder')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["navis-devs.onrender.com"]
+ALLOWED_HOSTS = ["navis-devs.onrender.com", "localhost", "127.0.0.1"]
+
 
 
 
@@ -97,7 +98,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',') 
 
 
 
