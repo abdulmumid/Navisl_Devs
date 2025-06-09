@@ -130,7 +130,6 @@ class Dizain(models.Model):
 
 # Модель для изображений на сайте
 class Image(models.Model):
-    title = models.CharField(max_length=255)  # Название изображения
     image = models.ImageField(upload_to='images/')  # Сам файл изображения
 
     class Meta:
