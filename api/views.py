@@ -23,7 +23,6 @@ class AboutView(generics.RetrieveAPIView):
     serializer_class = AboutSerializer
 
     def get_object(self):
-        # Возвращаем первый объект About (предполагается один объект)
         return About.objects.first()
 
 
@@ -62,8 +61,11 @@ class DizainViewSet(viewsets.ModelViewSet):
     serializer_class = DizainSerializer
 
 
-# --- CRUD для изображений ---
-class ImageViewSet(viewsets.ModelViewSet):
+# --- Только GET и POST для изображений ---
+class ImageViewSet(viewsets.GenericViewSet,
+                   mixins.ListModelMixin,     # GET /images/
+                   mixins.RetrieveModelMixin, # GET /images/<id>/
+                   mixins.CreateModelMixin):  # POST /images/
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
@@ -74,7 +76,7 @@ class JobViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = JobSerializer
 
 
-# --- Работа с откликами на вакансии: создание, просмотр списка, просмотр деталей ---
+# --- Работа с откликами на вакансии ---
 class JobApplicationViewSet(viewsets.GenericViewSet,
                             mixins.CreateModelMixin,
                             mixins.ListModelMixin,
