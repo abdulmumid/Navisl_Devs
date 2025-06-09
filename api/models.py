@@ -193,3 +193,4 @@ class Meropriyatie(models.Model):
         verbose_name = _('Мероприятие')
         verbose_name_plural = _('Мероприятия')
         ordering = ['id']
+

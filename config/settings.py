@@ -10,8 +10,9 @@ load_dotenv(dotenv_path=BASE_DIR / '.env')
 
 # Безопасность и режим отладки
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-placeholder')  
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
+DEBUG = True
+ALLOWED_HOSTS = ['navis-devs.onrender.com']
+
 
 # Приложения
 INSTALLED_APPS = [
