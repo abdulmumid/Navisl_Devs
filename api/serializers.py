@@ -1,139 +1,129 @@
 from rest_framework import serializers
 from .models import (
-    ContactRequest, Services, About, Tool, Project, Review, Consult,
+    ContactRequest, About, Tool, Project, Review, Consult,
     Dizain, Image, Job, JobApplication, Meropriyatie
 )
 
+
 class ContactRequestSerializer(serializers.ModelSerializer):
-    телефон = serializers.CharField(source='phone')
-    почта = serializers.EmailField(source='email')
-    файл = serializers.FileField(source='file')
-    создано = serializers.DateTimeField(source='created_at')
+    phone = serializers.CharField(label="Телефон")
+    email = serializers.EmailField(label="Электронная почта")
+    file = serializers.FileField(label="Файл")
+    created_at = serializers.DateTimeField(label="Дата создания", read_only=True)
 
     class Meta:
         model = ContactRequest
-        fields = ('id', 'телефон', 'почта', 'файл', 'создано')
-
-
-class ServicesSerializer(serializers.ModelSerializer):
-    название = serializers.CharField(source='title')
-    описание = serializers.CharField(source='description')
-    категория = serializers.CharField(source='category')
-    иконка = serializers.CharField(source='icon')
-
-    class Meta:
-        model = Services
-        fields = ('id', 'название', 'описание', 'категория', 'иконка')
+        fields = '__all__'
 
 
 class AboutSerializer(serializers.ModelSerializer):
-    заголовок = serializers.CharField(source='heading')
-    подзаголовок = serializers.CharField(source='subheading')
-    имя_основателя = serializers.CharField(source='founder_name')
-    должность_основателя = serializers.CharField(source='founder_role')
-    фото_основателя = serializers.ImageField(source='founder_image')
+    heading = serializers.CharField(label="Заголовок")
+    subheading = serializers.CharField(label="Подзаголовок")
+    founder_name = serializers.CharField(label="Имя основателя")
+    founder_role = serializers.CharField(label="Должность основателя")
+    founder_image = serializers.ImageField(label="Фото основателя")
 
     class Meta:
         model = About
-        fields = ('id', 'заголовок', 'подзаголовок', 'имя_основателя', 'должность_основателя', 'фото_основателя')
+        fields = '__all__'
 
 
 class ToolSerializer(serializers.ModelSerializer):
-    название = serializers.CharField(source='name')
-    иконка = serializers.ImageField(source='icon')
+    name = serializers.CharField(label="Название")
+    icon = serializers.ImageField(label="Иконка")
 
     class Meta:
         model = Tool
-        fields = ('id', 'название', 'иконка')
+        fields = '__all__'
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    название = serializers.CharField(source='title')
-    изображение = serializers.ImageField(source='photo')
-    категория = serializers.CharField(source='category')
-    ссылка = serializers.URLField(source='url')
+    title = serializers.CharField(label="Название проекта")
+    photo = serializers.ImageField(label="Фото проекта")
+    category = serializers.CharField(label="Категория")
+    url = serializers.URLField(label="Ссылка на проект", required=False)
 
     class Meta:
         model = Project
-        fields = ('id', 'название', 'изображение', 'категория', 'ссылка')
+        fields = '__all__'
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    имя = serializers.CharField(source='name')
-    должность = serializers.CharField(source='position')
-    сообщение = serializers.CharField(source='message')
-    фото = serializers.ImageField(source='photo')
-    дата = serializers.DateTimeField(source='created_at')
+    name = serializers.CharField(label="Имя")
+    position = serializers.CharField(label="Должность")
+    message = serializers.CharField(label="Сообщение")
+    photo = serializers.ImageField(label="Фото", required=False)
+    created_at = serializers.DateTimeField(label="Дата", read_only=True)
 
     class Meta:
         model = Review
-        fields = ('id', 'имя', 'должность', 'сообщение', 'фото', 'дата')
+        fields = '__all__'
 
 
 class ConsultSerializer(serializers.ModelSerializer):
-    имя = serializers.CharField(source='name')
-    телефон = serializers.CharField(source='phone')
-    сообщение = serializers.CharField(source='text')
-    создано = serializers.DateTimeField(source='created_at')
+    name = serializers.CharField(label="Имя")
+    phone = serializers.CharField(label="Телефон")
+    text = serializers.CharField(label="Сообщение")
+    created_at = serializers.DateTimeField(label="Дата", read_only=True)
 
     class Meta:
         model = Consult
-        fields = ('id', 'имя', 'телефон', 'сообщение', 'создано')
+        fields = '__all__'
 
 
 class DizainSerializer(serializers.ModelSerializer):
-    название = serializers.CharField(source='title')
-    описание = serializers.CharField(source='text')
-    изображение = serializers.ImageField(source='image')
+    title = serializers.CharField(label="Название")
+    text = serializers.CharField(label="Описание")
+    image = serializers.ImageField(label="Изображение")
 
     class Meta:
         model = Dizain
-        fields = ('id', 'название', 'описание', 'изображение')
+        fields = '__all__'
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    изображение = serializers.ImageField(source='image')
+    image = serializers.ImageField(label="Изображение")
 
     class Meta:
         model = Image
-        fields = ('id', 'изображение')
+        fields = '__all__'
 
 
 class JobSerializer(serializers.ModelSerializer):
-    название = serializers.CharField(source='title')
-    описание = serializers.CharField(source='description')
-    категория = serializers.CharField(source='category')
-    уровень = serializers.CharField(source='level')
-    тип_работы = serializers.CharField(source='work_type')
-    активна = serializers.BooleanField(source='is_active')
-    создано = serializers.DateTimeField(source='created_at')
+    title = serializers.CharField(label="Название")
+    description = serializers.CharField(label="Описание")
+    category = serializers.CharField(label="Категория")
+    level = serializers.CharField(label="Уровень")
+    work_type = serializers.CharField(label="Тип работы")
+    is_active = serializers.BooleanField(label="Активна")
+    created_at = serializers.DateTimeField(label="Дата создания", read_only=True)
 
     class Meta:
         model = Job
-        fields = ('id', 'название', 'описание', 'категория', 'уровень', 'тип_работы', 'активна', 'создано')
+        fields = '__all__'
 
 
 class JobApplicationSerializer(serializers.ModelSerializer):
-    вакансия = serializers.PrimaryKeyRelatedField(source='job', read_only=True)
-    имя = serializers.CharField(source='name')
-    телефон = serializers.CharField(source='phone')
-    почта = serializers.EmailField(source='email')
-    linkedin = serializers.URLField(source='linkedin_url')
-    файл = serializers.FileField(source='file')
-    подано = serializers.DateTimeField(source='applied_at')
+    job = serializers.PrimaryKeyRelatedField(label="Вакансия", queryset=Job.objects.all())
+    name = serializers.CharField(label="Имя")
+    phone = serializers.CharField(label="Телефон")
+    email = serializers.EmailField(label="Email")
+    linkedin_url = serializers.URLField(label="LinkedIn", required=False)
+    file = serializers.FileField(label="Файл")
+    applied_at = serializers.DateTimeField(label="Дата подачи", read_only=True)
 
     class Meta:
         model = JobApplication
-        fields = ('id', 'вакансия', 'имя', 'телефон', 'почта', 'linkedin', 'файл', 'подано')
+        fields = '__all__'
 
 
 class MeropriyatieSerializer(serializers.ModelSerializer):
-    название = serializers.CharField(source='title')
-    описание = serializers.CharField(source='description')
-    дата = serializers.DateTimeField(source='date')
-    место = serializers.CharField(source='location')
-    изображение = serializers.ImageField(source='image')
+    title = serializers.CharField(label="Название")
+    description = serializers.CharField(label="Описание")
+    date = serializers.DateTimeField(label="Дата")
+    location = serializers.CharField(label="Место проведения")
+    image = serializers.ImageField(label="Изображение")
 
     class Meta:
         model = Meropriyatie
-        fields = ('id', 'название', 'описание', 'дата', 'место', 'изображение')
+        fields = '__all__'
