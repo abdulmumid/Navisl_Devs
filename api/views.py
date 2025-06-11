@@ -1,47 +1,49 @@
 from rest_framework import generics, viewsets, mixins
 
 from .models import (
-    ContactRequest, Provide, About, Tool, Project, Review, Consult,
+    ContactRequest, Services, About, Tool, Project, Review, Consult,
     Dizain, Image, Job, JobApplication, Meropriyatie
 )
 from .serializers import (
-    ContactRequestSerializer, ProvideSerializer, AboutSerializer, ToolSerializer, ProjectSerializer,
+    ContactRequestSerializer, ServicesSerializer, AboutSerializer, ToolSerializer, ProjectSerializer,
     ReviewSerializer, ConsultSerializer, DizainSerializer, ImageSerializer,
     JobSerializer, JobApplicationSerializer, MeropriyatieSerializer
 )
 
-
-# --- Создание новой заявки через API ---
+# --- Создание новой заявки через API (POST) ---
 class ContactRequestCreateView(generics.CreateAPIView):
     queryset = ContactRequest.objects.all()
     serializer_class = ContactRequestSerializer
 
-# --- Просмотр и редактирование информации о предоставляемых услугах ---
-class ProvideViewSet(viewsets.ModelViewSet):
-    queryset = Provide.objects.all()
-    serializer_class = ProvideSerializer
 
-    def get_queryset(self):
-        # Возвращаем только активные услуги
-        return self.queryset.filter(is_active=True).order_by('-created_at')
+# --- Только GET и POST для услуг ---
+class ServicesViewSet(viewsets.GenericViewSet,
+                      mixins.ListModelMixin,
+                      mixins.RetrieveModelMixin,
+                      mixins.CreateModelMixin):
+    queryset = Services.objects.all()
+    serializer_class = ServicesSerializer
 
-# --- Получение информации "О нас" (первый объект) ---
+
+# --- Получение первого объекта "О нас" (GET) ---
 class AboutView(generics.RetrieveAPIView):
     queryset = About.objects.all()
     serializer_class = AboutSerializer
 
     def get_object(self):
-        # Возвращаем первый объект About (предполагается один объект)
         return About.objects.first()
 
 
-# --- CRUD для инструментов ---
-class ToolViewSet(viewsets.ModelViewSet):
+# --- Только GET и POST для инструментов ---
+class ToolViewSet(viewsets.GenericViewSet,
+                  mixins.ListModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.CreateModelMixin):
     queryset = Tool.objects.all()
     serializer_class = ToolSerializer
 
 
-# --- Просмотр проектов (список и детали) ---
+# --- Проекты: GET список и детали ---
 class ProjectView(viewsets.GenericViewSet,
                   mixins.ListModelMixin,
                   mixins.RetrieveModelMixin):
@@ -49,7 +51,7 @@ class ProjectView(viewsets.GenericViewSet,
     serializer_class = ProjectSerializer
 
 
-# --- Просмотр отзывов (список и детали) ---
+# --- Отзывы: GET список и детали ---
 class ReviewView(viewsets.GenericViewSet,
                  mixins.ListModelMixin,
                  mixins.RetrieveModelMixin):
@@ -57,32 +59,38 @@ class ReviewView(viewsets.GenericViewSet,
     serializer_class = ReviewSerializer
 
 
-# --- Создание заявки на консультацию ---
+# --- POST только для консультаций ---
 class ConsultView(viewsets.GenericViewSet,
                   mixins.CreateModelMixin):
     queryset = Consult.objects.all()
     serializer_class = ConsultSerializer
 
 
-# --- CRUD для дизайнов ---
-class DizainViewSet(viewsets.ModelViewSet):
+# --- Дизайны: только GET и POST ---
+class DizainViewSet(viewsets.GenericViewSet,
+                    mixins.ListModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.CreateModelMixin):
     queryset = Dizain.objects.all()
     serializer_class = DizainSerializer
 
 
-# --- CRUD для изображений ---
-class ImageViewSet(viewsets.ModelViewSet):
+# --- Изображения: только GET и POST ---
+class ImageViewSet(viewsets.GenericViewSet,
+                   mixins.ListModelMixin,
+                   mixins.RetrieveModelMixin,
+                   mixins.CreateModelMixin):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
 
-# --- Только чтение вакансий (активные) ---
+# --- Вакансии: только GET ---
 class JobViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Job.objects.filter(is_active=True).order_by('-created_at')
     serializer_class = JobSerializer
 
 
-# --- Работа с откликами на вакансии: создание, просмотр списка, просмотр деталей ---
+# --- Заявки на вакансии: GET и POST ---
 class JobApplicationViewSet(viewsets.GenericViewSet,
                             mixins.CreateModelMixin,
                             mixins.ListModelMixin,
@@ -91,7 +99,10 @@ class JobApplicationViewSet(viewsets.GenericViewSet,
     serializer_class = JobApplicationSerializer
 
 
-# --- CRUD для мероприятий ---
-class MeropriyatieViewSet(viewsets.ModelViewSet):
+# --- Мероприятия: GET и POST ---
+class MeropriyatieViewSet(viewsets.GenericViewSet,
+                          mixins.ListModelMixin,
+                          mixins.RetrieveModelMixin,
+                          mixins.CreateModelMixin):
     queryset = Meropriyatie.objects.all()
     serializer_class = MeropriyatieSerializer
