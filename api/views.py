@@ -1,31 +1,41 @@
-from rest_framework import generics, viewsets, mixins
+from rest_framework import generics, mixins, viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 from .models import (
-    ContactRequest, Services, About, Tool, Project, Review, Consult,
+    ContactRequest, Provide, About, Tool, Project, Review, Consult,
     Dizain, Image, Job, JobApplication, Meropriyatie
 )
 from .serializers import (
-    ContactRequestSerializer, ServicesSerializer, AboutSerializer, ToolSerializer, ProjectSerializer,
+    ContactRequestSerializer, ProvideSerializer, AboutSerializer, ToolSerializer, ProjectSerializer,
     ReviewSerializer, ConsultSerializer, DizainSerializer, ImageSerializer,
     JobSerializer, JobApplicationSerializer, MeropriyatieSerializer
 )
 
-# --- Создание новой заявки через API (POST) ---
+
+# --- Создание новой заявки через API ---
 class ContactRequestCreateView(generics.CreateAPIView):
     queryset = ContactRequest.objects.all()
     serializer_class = ContactRequestSerializer
 
 
-# --- Только GET и POST для услуг ---
-class ServicesViewSet(viewsets.GenericViewSet,
-                      mixins.ListModelMixin,
-                      mixins.RetrieveModelMixin,
-                      mixins.CreateModelMixin):
-    queryset = Services.objects.all()
-    serializer_class = ServicesSerializer
+# --- Просмотр списка услуг (GET) и создание услуги (POST) ---
+class ProvideListCreateView(APIView):
+    def get(self, request):
+        queryset = Provide.objects.filter(is_active=True).order_by('-created_at')
+        serializer = ProvideSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ProvideSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# --- Получение первого объекта "О нас" (GET) ---
+# --- Получение информации "О нас" (только GET первого объекта) ---
 class AboutView(generics.RetrieveAPIView):
     queryset = About.objects.all()
     serializer_class = AboutSerializer
@@ -34,75 +44,112 @@ class AboutView(generics.RetrieveAPIView):
         return About.objects.first()
 
 
-# --- Только GET и POST для инструментов ---
-class ToolViewSet(viewsets.GenericViewSet,
-                  mixins.ListModelMixin,
-                  mixins.RetrieveModelMixin,
-                  mixins.CreateModelMixin):
-    queryset = Tool.objects.all()
-    serializer_class = ToolSerializer
+# --- Инструменты: только GET и POST ---
+class ToolListCreateView(APIView):
+    def get(self, request):
+        tools = Tool.objects.all()
+        serializer = ToolSerializer(tools, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ToolSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# --- Проекты: GET список и детали ---
-class ProjectView(viewsets.GenericViewSet,
-                  mixins.ListModelMixin,
-                  mixins.RetrieveModelMixin):
+# --- Проекты ---
+class ProjectListView(generics.ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+class ProjectDetailView(generics.RetrieveAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
 
-# --- Отзывы: GET список и детали ---
-class ReviewView(viewsets.GenericViewSet,
-                 mixins.ListModelMixin,
-                 mixins.RetrieveModelMixin):
+# --- Отзывы ---
+class ReviewListView(generics.ListAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+class ReviewDetailView(generics.RetrieveAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
 
-# --- POST только для консультаций ---
-class ConsultView(viewsets.GenericViewSet,
-                  mixins.CreateModelMixin):
+# --- Консультация ---
+class ConsultCreateView(generics.CreateAPIView):
     queryset = Consult.objects.all()
     serializer_class = ConsultSerializer
 
 
-# --- Дизайны: только GET и POST ---
-class DizainViewSet(viewsets.GenericViewSet,
-                    mixins.ListModelMixin,
-                    mixins.RetrieveModelMixin,
-                    mixins.CreateModelMixin):
-    queryset = Dizain.objects.all()
-    serializer_class = DizainSerializer
+# --- Дизайн ---
+class DizainListCreateView(APIView):
+    def get(self, request):
+        queryset = Dizain.objects.all()
+        serializer = DizainSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = DizainSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# --- Изображения: только GET и POST ---
-class ImageViewSet(viewsets.GenericViewSet,
-                   mixins.ListModelMixin,
-                   mixins.RetrieveModelMixin,
-                   mixins.CreateModelMixin):
-    queryset = Image.objects.all()
-    serializer_class = ImageSerializer
+# --- Изображения ---
+class ImageListCreateView(APIView):
+    def get(self, request):
+        queryset = Image.objects.all()
+        serializer = ImageSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = ImageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# --- Вакансии: только GET ---
-class JobViewSet(viewsets.ReadOnlyModelViewSet):
+# --- Вакансии (только GET активных) ---
+class JobListView(generics.ListAPIView):
     queryset = Job.objects.filter(is_active=True).order_by('-created_at')
     serializer_class = JobSerializer
 
-
-# --- Заявки на вакансии: GET и POST ---
-class JobApplicationViewSet(viewsets.GenericViewSet,
-                            mixins.CreateModelMixin,
-                            mixins.ListModelMixin,
-                            mixins.RetrieveModelMixin):
-    queryset = JobApplication.objects.all()
-    serializer_class = JobApplicationSerializer
+class JobDetailView(generics.RetrieveAPIView):
+    queryset = Job.objects.filter(is_active=True)
+    serializer_class = JobSerializer
 
 
-# --- Мероприятия: GET и POST ---
-class MeropriyatieViewSet(viewsets.GenericViewSet,
-                          mixins.ListModelMixin,
-                          mixins.RetrieveModelMixin,
-                          mixins.CreateModelMixin):
-    queryset = Meropriyatie.objects.all()
-    serializer_class = MeropriyatieSerializer
+# --- Отклики на вакансии ---
+class JobApplicationListCreateView(APIView):
+    def get(self, request):
+        queryset = JobApplication.objects.all()
+        serializer = JobApplicationSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = JobApplicationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# --- Мероприятия ---
+class MeropriyatieListCreateView(APIView):
+    def get(self, request):
+        queryset = Meropriyatie.objects.all()
+        serializer = MeropriyatieSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = MeropriyatieSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
