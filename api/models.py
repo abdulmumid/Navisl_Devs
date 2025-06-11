@@ -19,7 +19,7 @@ class ContactRequest(models.Model):
         ordering = ['id']
 
 
-class Services(models.Model):
+class Provide(models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Название"))
     description = models.TextField(verbose_name=_("Описание"))
     category = models.CharField(max_length=255, verbose_name=_("Категория"))
@@ -29,8 +29,8 @@ class Services(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = _('Панель')
-        verbose_name_plural = _('Панели')
+        verbose_name = _('Предоставляемая услуга')
+        verbose_name_plural = _('Предоставляемые услуги')
         ordering = ['id']
 
 

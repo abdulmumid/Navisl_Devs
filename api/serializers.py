@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import (
     About,
     ContactRequest,
+    Provide,
     Consult,
     Dizain,
     Image,
@@ -10,7 +11,6 @@ from .models import (
     Meropriyatie,
     Project,
     Review,
-    Services,
     Tool,
 )
 
@@ -22,15 +22,15 @@ class ContactRequestSerializer(serializers.ModelSerializer):
         fields = ['id', 'phone', 'email', 'created_at']
         read_only_fields = ['id', 'created_at']  # Эти поля нельзя изменять, только для чтения
 
-# Сериализатор для сервиса с дополнительным методом получения списка характеристик
-class ServicesSerializer(serializers.ModelSerializer):
+# Сериализатор для предоставляемой услуги с дополнительным методом получения списка характеристик
+class ProvideSerializer(serializers.ModelSerializer):
     features = serializers.SerializerMethodField()
 
     class Meta:
-        model = Services
+        model = Provide
         fields = '__all__'
 
-    # Возвращает список характеристик сервиса (метод модели)
+    # Возвращает список характеристик предоставляемой услуги (метод модели)
     def get_features(self, obj):
         return obj.get_features_list()
 

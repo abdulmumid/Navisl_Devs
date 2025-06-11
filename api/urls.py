@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     ContactRequestCreateView,
+    ProvideViewSet,
     AboutView,
     ToolViewSet,
     ProjectView,
@@ -19,6 +20,7 @@ router = DefaultRouter()
 
 # Регистрируем viewset-ы в роутере с префиксами и базовыми именами
 router.register('consult', ConsultView, basename='consult')
+router.register('provides', ProvideViewSet, basename='provides')
 router.register('tools', ToolViewSet, basename='tools')
 router.register('projects', ProjectView, basename='projects') 
 router.register('reviews', ReviewView, basename='reviews')

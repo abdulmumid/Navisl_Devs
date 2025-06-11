@@ -1,11 +1,11 @@
 from rest_framework import generics, viewsets, mixins
 
 from .models import (
-    ContactRequest, About, Tool, Project, Review, Consult,
+    ContactRequest, Provide, About, Tool, Project, Review, Consult,
     Dizain, Image, Job, JobApplication, Meropriyatie
 )
 from .serializers import (
-    ContactRequestSerializer, AboutSerializer, ToolSerializer, ProjectSerializer,
+    ContactRequestSerializer, ProvideSerializer, AboutSerializer, ToolSerializer, ProjectSerializer,
     ReviewSerializer, ConsultSerializer, DizainSerializer, ImageSerializer,
     JobSerializer, JobApplicationSerializer, MeropriyatieSerializer
 )
@@ -16,6 +16,14 @@ class ContactRequestCreateView(generics.CreateAPIView):
     queryset = ContactRequest.objects.all()
     serializer_class = ContactRequestSerializer
 
+# --- Просмотр и редактирование информации о предоставляемых услугах ---
+class ProvideViewSet(viewsets.ModelViewSet):
+    queryset = Provide.objects.all()
+    serializer_class = ProvideSerializer
+
+    def get_queryset(self):
+        # Возвращаем только активные услуги
+        return self.queryset.filter(is_active=True).order_by('-created_at')
 
 # --- Получение информации "О нас" (первый объект) ---
 class AboutView(generics.RetrieveAPIView):
