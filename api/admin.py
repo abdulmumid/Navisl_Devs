@@ -1,9 +1,10 @@
 from django.contrib import admin
 from .models import ContactRequest, Provide, About, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication, Meropriyatie
-
+from .forms import BasePhoneForm
 
 @admin.register(ContactRequest)
 class ContactRequestAdmin(admin.ModelAdmin):
+    form = BasePhoneForm
     list_display = ('phone', 'email', 'created_at')  
 
 @admin.register(Provide)
@@ -26,6 +27,7 @@ class ReviewAdmin(admin.ModelAdmin):
 
 @admin.register(Consult)
 class ConsultAdmin(admin.ModelAdmin):
+    form = BasePhoneForm
     list_display = ('id','name', 'phone', 'text', 'created_at')
 
 @admin.register(Dizain)
@@ -46,6 +48,7 @@ class JobAdmin(admin.ModelAdmin):
 
 @admin.register(JobApplication)
 class JobApplicationAdmin(admin.ModelAdmin):
+    form = BasePhoneForm
     list_display = ('name', 'email', 'phone', 'job', 'applied_at')
     list_filter = ('applied_at',)
     search_fields = ('name', 'email', 'phone', 'linkedin_url')
