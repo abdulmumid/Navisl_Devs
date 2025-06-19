@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import ContactRequest, Provide, About, Tool, Project, Review, Consult, Dizain, Image, Job, JobApplication, Meropriyatie
 from .forms import BasePhoneForm
+from django.utils.safestring import mark_safe
 
 @admin.register(ContactRequest)
 class ContactRequestAdmin(admin.ModelAdmin):
@@ -36,7 +37,13 @@ class DizainAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'image')
+    list_display = ('id', 'image', 'display_qr')
+
+    def display_qr(self, obj):
+        if obj.image:
+            return '<img src="{}" style="max-height: 100px; max-width: 100px;"/>'.format(obj.image.url)
+        return 'No Image'
+    display_qr.short_description = 'QR код'
 
 
 @admin.register(Job)
