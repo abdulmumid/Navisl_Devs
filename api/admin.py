@@ -37,13 +37,13 @@ class DizainAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'image', 'display_qr')
+    list_display = ('id', 'img')
 
-    def display_qr(self, obj):
+    def img(self, obj):
         if obj.image:
             return '<img src="{}" style="max-height: 100px; max-width: 100px;"/>'.format(obj.image.url)
         return 'No Image'
-    display_qr.short_description = 'QR код'
+    img.short_description = 'img'
 
 
 @admin.register(Job)
