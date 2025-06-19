@@ -37,13 +37,14 @@ class DizainAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'img_tag') 
+    list_display = ('id', 'image_preview')  # Показываем ID и превью картинки
 
-    def img_tag(self, obj):
-        if obj.img:
-            return mark_safe(f'<img src="{obj.img.url}" style="max-height: 100px; max-width: 100px;" />')
-        return 'No Image'
-    img_tag.short_description = 'Картинка'
+    def image_preview(self, obj):
+        if obj.image:
+            return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px; max-width: 100px;" />')
+        return 'Нет изображения'
+
+    image_preview.short_description = 'Превью'
 
 
 
