@@ -40,8 +40,8 @@ class ImageAdmin(admin.ModelAdmin):
     list_display = ('id', 'img')
 
     def img(self, obj):
-        if obj.image:
-            return '<img src="{}" style="max-height: 100px; max-width: 100px;"/>'.format(obj.image.url)
+        if obj.img:
+            return '<img src="{}" style="max-height: 100px; max-width: 100px;"/>'.format(obj.img.url)
         return 'No Image'
     img.short_description = 'img'
 
