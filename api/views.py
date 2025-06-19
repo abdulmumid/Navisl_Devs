@@ -14,13 +14,13 @@ from .serializers import (
 )
 
 
-# --- Создание новой заявки через API ---
+
 class ContactRequestCreateView(generics.CreateAPIView):
     queryset = ContactRequest.objects.all()
     serializer_class = ContactRequestSerializer
 
 
-# --- Просмотр списка услуг (GET) и создание услуги (POST) ---
+
 class ProvideListCreateView(APIView):
     def get(self, request):
         queryset = Provide.objects.filter(is_active=True).order_by('-created_at')
@@ -35,7 +35,7 @@ class ProvideListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# --- Получение информации "О нас" (только GET первого объекта) ---
+
 class AboutView(generics.RetrieveAPIView):
     queryset = About.objects.all()
     serializer_class = AboutSerializer
@@ -44,7 +44,6 @@ class AboutView(generics.RetrieveAPIView):
         return About.objects.first()
 
 
-# --- Инструменты: только GET и POST ---
 class ToolListCreateView(APIView):
     def get(self, request):
         tools = Tool.objects.all()
@@ -59,7 +58,6 @@ class ToolListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# --- Проекты ---
 class ProjectListView(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
@@ -69,7 +67,7 @@ class ProjectDetailView(generics.RetrieveAPIView):
     serializer_class = ProjectSerializer
 
 
-# --- Отзывы ---
+
 class ReviewListView(generics.ListAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -79,13 +77,12 @@ class ReviewDetailView(generics.RetrieveAPIView):
     serializer_class = ReviewSerializer
 
 
-# --- Консультация ---
 class ConsultCreateView(generics.CreateAPIView):
     queryset = Consult.objects.all()
     serializer_class = ConsultSerializer
 
 
-# --- Дизайн ---
+
 class DizainListCreateView(APIView):
     def get(self, request):
         queryset = Dizain.objects.all()
@@ -100,7 +97,7 @@ class DizainListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# --- Изображения ---
+
 class ImageListCreateView(APIView):
     def get(self, request):
         queryset = Image.objects.all()
@@ -115,7 +112,7 @@ class ImageListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# --- Вакансии (только GET активных) ---
+
 class JobListView(generics.ListAPIView):
     queryset = Job.objects.filter(is_active=True).order_by('-created_at')
     serializer_class = JobSerializer
@@ -125,7 +122,7 @@ class JobDetailView(generics.RetrieveAPIView):
     serializer_class = JobSerializer
 
 
-# --- Отклики на вакансии ---
+
 class JobApplicationListCreateView(APIView):
     def get(self, request):
         queryset = JobApplication.objects.all()
@@ -140,7 +137,7 @@ class JobApplicationListCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# --- Мероприятия ---
+
 class MeropriyatieListCreateView(APIView):
     def get(self, request):
         queryset = Meropriyatie.objects.all()
