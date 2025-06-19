@@ -37,13 +37,14 @@ class DizainAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'img')
+    list_display = ('id', 'img_tag') 
 
-    def img(self, obj):
+    def img_tag(self, obj):
         if obj.img:
-            return '<img src="{}" style="max-height: 100px; max-width: 100px;"/>'.format(obj.img.url)
+            return mark_safe(f'<img src="{obj.img.url}" style="max-height: 100px; max-width: 100px;" />')
         return 'No Image'
-    img.short_description = 'img'
+    img_tag.short_description = 'Картинка'
+
 
 
 @admin.register(Job)
