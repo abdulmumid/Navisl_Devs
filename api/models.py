@@ -130,7 +130,7 @@ class Image(models.Model):
 
 
 class Job(models.Model):
-    title = models.CharField(max_length=255, verbose_name=_("Название"))
+    title = models.CharField(("Название"),max_length=255)
     description = models.TextField(verbose_name=_("Описание"))
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, verbose_name=_("Категория"))
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES, verbose_name=_("Уровень"))

@@ -14,6 +14,9 @@ DEBUG = False
 ALLOWED_HOSTS = ['navis-devs.onrender.com']
 
 
+
+
+
 # Приложения
 INSTALLED_APPS = [
     'jazzmin',
