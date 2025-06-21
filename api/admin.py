@@ -33,11 +33,20 @@ class ConsultAdmin(admin.ModelAdmin):
 
 @admin.register(Dizain)
 class DizainAdmin(admin.ModelAdmin):
-    list_display = ('id','title', 'text', 'image')
+    list_display = ('id','title', 'text', 'image_preview')
+
+    list_display = ('id', 'image_preview') 
+
+    def image_preview(self, obj):
+        if obj.image:
+            return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px; max-width: 100px;" />')
+        return 'Нет изображения'
+
+    image_preview.short_description = 'Превью'
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'image_preview')  # Показываем ID и превью картинки
+    list_display = ('id', 'image_preview') 
 
     def image_preview(self, obj):
         if obj.image:
