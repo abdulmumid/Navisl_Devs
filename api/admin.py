@@ -31,11 +31,10 @@ class ConsultAdmin(admin.ModelAdmin):
     form = BasePhoneForm
     list_display = ('id','name', 'phone', 'text', 'created_at')
 
+
 @admin.register(Dizain)
 class DizainAdmin(admin.ModelAdmin):
-    list_display = ('id','title', 'text', 'image_preview')
-
-    list_display = ('id', 'image_preview') 
+    list_display = ('id', 'title', 'text', 'image_preview')
 
     def image_preview(self, obj):
         if obj.image:
@@ -43,6 +42,7 @@ class DizainAdmin(admin.ModelAdmin):
         return 'Нет изображения'
 
     image_preview.short_description = 'Превью'
+
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
