@@ -77,14 +77,15 @@ class JobApplicationAdmin(admin.ModelAdmin):
     list_filter = ('applied_at',)
     search_fields = ('name', 'email', 'phone', 'linkedin_url')
 
+
 @admin.register(Meropriyatie)
 class MeropriyatieAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'description', 'date', 'image', 'location')
+    list_display = ('id', 'title', 'description', 'date', 'image_preview', 'location')
     list_filter = ('date',)
     search_fields = ('title', 'description')
 
-    def image(self, obj):
+    def image_preview(self, obj):
         if obj.image:
             return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px; max-width: 100px;" />')
         return 'Нет изображения'
-    image.short_description = 'Изображение'
+    image_preview.short_description = 'Изображение'
