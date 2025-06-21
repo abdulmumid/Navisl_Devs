@@ -24,7 +24,13 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'position', 'message', 'photo', 'created_at')
+    list_display = ('id','name', 'position', 'message', 'photo_preview', 'created_at')
+
+    def photo_preview(self, obj):
+        if obj.photo:
+            return mark_safe(f'<img src="{obj.photo.url}" style="max-height: 100px; max-width: 100px;" />')
+        return 'Нет изображения'
+    photo_preview.short_description = 'Превью'
 
 @admin.register(Consult)
 class ConsultAdmin(admin.ModelAdmin):
@@ -73,6 +79,12 @@ class JobApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(Meropriyatie)
 class MeropriyatieAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'description', 'date','location')
+    list_display = ('id', 'title', 'description', 'date', 'image', 'location')
     list_filter = ('date',)
     search_fields = ('title', 'description')
+
+    def image(self, obj):
+        if obj.image:
+            return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px; max-width: 100px;" />')
+        return 'Нет изображения'
+    image.short_description = 'Изображение'
