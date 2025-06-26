@@ -22,6 +22,7 @@ class ContactRequestCreateView(generics.CreateAPIView):
 
 
 class ProvideListCreateView(APIView):
+    
     def get(self, request):
         queryset = Provide.objects.filter(is_active=True).order_by('-created_at')
         serializer = ProvideSerializer(queryset, many=True)
@@ -150,3 +151,4 @@ class MeropriyatieListCreateView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    

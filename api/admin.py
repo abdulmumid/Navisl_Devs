@@ -14,6 +14,7 @@ class ProvideAdmin(admin.ModelAdmin):
 
 admin.site.register(About)
 
+
 admin.site.register(Tool)
 class ToolAdmin(admin.ModelAdmin):
     list_display = '__all__'
