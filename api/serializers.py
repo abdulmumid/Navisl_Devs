@@ -94,6 +94,26 @@ class JobApplicationSerializer(serializers.ModelSerializer):
         model = JobApplication
         fields = '__all__'
 
+    def validate_file(self, file):
+        allowed_types = {'application/pdf', 'image/svg+xml', 'image/png'}
+        allowed_extensions = {'pdf', 'svg', 'png'}
+
+        if file:
+            # Проверяем MIME-тип
+            if file.content_type not in allowed_types:
+                raise serializers.ValidationError(
+                    f'Файл "{file.name}" имеет недопустимый формат! Разрешены только PDF, SVG, PNG.'
+                )
+
+            # Проверяем расширение файла
+            ext = os.path.splitext(file.name)[1][1:].lower()
+            if ext not in allowed_extensions:
+                raise serializers.ValidationError(
+                    f'Файл "{file.name}" имеет недопустимое расширение! Разрешены только .pdf, .svg, .png.'
+                )  # ← Закрыл кавычки
+
+        return file
+
 # Сериализатор для мероприятий компании
 class MeropriyatieSerializer(serializers.ModelSerializer):
     class Meta:

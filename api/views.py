@@ -100,6 +100,7 @@ class DizainListCreateView(APIView):
 
 
 class ImageListCreateView(APIView):
+
     def get(self, request):
         queryset = Image.objects.all()
         serializer = ImageSerializer(queryset, many=True)
@@ -125,6 +126,7 @@ class JobDetailView(generics.RetrieveAPIView):
 
 
 class JobApplicationListCreateView(APIView):
+    
     def get(self, request):
         queryset = JobApplication.objects.all()
         serializer = JobApplicationSerializer(queryset, many=True)
